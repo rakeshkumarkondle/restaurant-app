@@ -1,0 +1,65 @@
+<div id="container">
+    <div id="header" class="row">
+
+        <span class="welcome pull-right">Welcome {{loginDetails.data.name}},<a href="#" ng-click="logout($event)"> logout</a></span>
+    </div>
+    <div ng-show="isAdmin" class="row">
+        <label>Disable previously selected restaurants:</label>
+        <input type="checkbox" ng-model="showPreviousSelected" ng-change="toggleDisable()">
+    </div>
+    <div ng-hide="isAdmin">
+
+
+        <div class="alert alert-danger design">
+            <h4>Restaurant voted by popular demand for today's team lunch:</h4>
+            <p ng-show="!votingTimeDone"> &nbsp;&nbsp;Voting results will be announced at noon..</p>
+            <div class="selectedImage" ng-show="selectedImage!=undefined&&votingTimeDone">
+                <span>{{selectedImage.name}}</span><br>
+                <img src="../{{selectedImage.image}}" width="180" height="150"><br>
+            </div>
+            <p ng-show="selectedImage==undefined&&votingTimeDone">No votes casted for today's restaurant pick.</p>
+        </div>
+        <div id="inner_container">
+            <div class="alert alert-info design">
+                <h4>Voting Guidelines</h4>
+                <marquee>
+                    <span>  You need to vote by noon everyday and voting results will be announced at noon, each day.</span>
+                    <span> While you can change your voting in a day, you can finally vote for only one restaurant in a day.</span>
+                    <span> If no votes castes by noon, no restaurants will be selected for that day.</span>
+                    <span> The restaurant that has been picked by popular vote, will not be voted again in the same week.</span>
+                    <span> Every Sunday midnight, all the restaurants will be available for voting, for the upcoming week.</span>
+
+                </marquee>
+            </div>
+            <h4>Vote for a restaurant for today's team lunch</h4>
+            <div class="row">
+                <div class="col-md-4 " ng-repeat="user in userDetails" style="margin-bottom: 15px;">
+                    <div class="user_details" style="border:2px solid green;padding:5px;text-align: center;" ng-class="{'active':user.todaySelected&&user.disableSelect&&user.disableVisited,'old':!user.todaySelected&&user.disableSelect&&user.disableVisited}">
+                        <span>{{user.name}}</span><br>
+                        <img src="../{{user.image}}" width="180" height="150"><br>
+                        <button class="btn btn-primary" ng-click="selectHotel(user)" ng-hide="user.disableSelect&&user.disableVisited" ng-disabled="disableSelect&&user.todaySelected">VOTE</button>
+                        <button ng-click="selectHotel(user)" class="btn btn-success" ng-show="user.disableSelect&&user.disableVisited" ng-disabled="user.disableSelect">VISITED</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" ng-show="showModal">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You can only vote before 12pm.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="reload()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

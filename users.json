@@ -1,0 +1,10 @@
+{
+	"users":[
+		{"id":1,"name":"hungryworker1"},
+		{"id":2,"name":"hungryworker2"},
+		{"id":3,"name":"hungryworker3"},
+		{"id":4,"name":"hungryworker4"},
+		{"id":5,"name":"hungryworker5"},
+		{"id":6,"name":"process_facilitator"}
+	]
+}
