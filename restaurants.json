@@ -1,1 +1,83 @@
-[{"id":0,"name":"Best Western","isDisable":false,"image":"images/image1.jpg","users":[1],"disableVisited":true,"selectedDate":"2017-02-20T18:00:00.000Z"},{"id":1,"name":"Hilton Hotels","isDisable":true,"image":"images/image2.jpg","users":[],"disableVisited":true},{"id":2,"name":"Hyatt","isDisable":false,"image":"images/image3.jpg","users":[],"disableVisited":true},{"id":3,"name":"InterContinental","isDisable":false,"image":"images/image4.jpeg","users":[],"disableVisited":true},{"id":4,"name":"Radisson Hotel","isDisable":false,"image":"images/image5.jpg","users":[],"disableVisited":true},{"id":5,"name":"Limestone","isDisable":false,"image":"images/image6.jpg","users":[],"disableVisited":true},{"id":6,"name":"The Garden","isDisable":false,"image":"images/image7.jpg","users":[],"disableVisited":true},{"id":7,"name":"Modesty","isDisable":false,"image":"images/image8.jpg","users":[],"disableVisited":true},{"id":8,"name":"The Shining Place","isDisable":false,"image":"images/image9.jpg","users":[],"disableVisited":true},{"id":9,"name":"The Tulip","isDisable":false,"image":"images/image10.jpg","users":[],"disableVisited":true}]
+[
+  {
+    "id": 0,
+    "name": "Best Western",
+    "isDisable": false,
+    "image": "images/image1.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 1,
+    "name": "Hilton Hotels",
+    "isDisable": true,
+    "image": "images/image2.jpg",
+    "users": [1],
+    "disableVisited": true,
+    "selectedDate": "2017-02-20T18:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Hyatt",
+    "isDisable": false,
+    "image": "images/image3.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 3,
+    "name": "InterContinental",
+    "isDisable": false,
+    "image": "images/image4.jpeg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 4,
+    "name": "Radisson Hotel",
+    "isDisable": false,
+    "image": "images/image5.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 5,
+    "name": "Limestone",
+    "isDisable": false,
+    "image": "images/image6.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 6,
+    "name": "The Garden",
+    "isDisable": false,
+    "image": "images/image7.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 7,
+    "name": "Modesty",
+    "isDisable": false,
+    "image": "images/image8.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 8,
+    "name": "The Shining Place",
+    "isDisable": false,
+    "image": "images/image9.jpg",
+    "users": [],
+    "disableVisited": true
+  },
+  {
+    "id": 9,
+    "name": "The Tulip",
+    "isDisable": false,
+    "image": "images/image10.jpg",
+    "users": [],
+    "disableVisited": true
+  }
+]

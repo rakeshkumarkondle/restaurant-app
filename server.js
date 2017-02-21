@@ -1,21 +1,28 @@
 var express = require('express'),
     users = [],
     app = express(),
-    contacts = [],
-    nextId = contacts.length + 1,
-    getContactById;
+    contacts = [];
 var today = new Date();
 today.setHours(10, 0, 0, 0);
 var fs = require("fs");
-
+/**
+   read the json file and store the restaurants data into an array 
+*/
 fs.readFile('./restaurants.json', 'utf-8', function(err, data) {
     if (err) throw err
 
     contacts = JSON.parse(data);
-    nextId = contacts.length + 1;
+
+    /**
+    this method will send the restaurants data to application
+    */
     app.get('/api/restaurants', function(req, res) {
         res.send(contacts);
     });
+
+    /**
+    this method will reset all the restaurants in past week send the updated data to application
+    */
     app.get('/api/resetAllRestaurants', function(req, res) {
 
         var userLength = [];
@@ -38,6 +45,9 @@ fs.readFile('./restaurants.json', 'utf-8', function(err, data) {
         res.send(contacts);
 
     });
+    /**
+    this method will keep the previously visited restaurants in current week send the updated data to application
+    */
     app.get('/api/resetRestaurants', function(req, res) {
 
         var userLength = [];
@@ -49,6 +59,7 @@ fs.readFile('./restaurants.json', 'utf-8', function(err, data) {
                     userLength.push(contacts[i].users.length);
                 }
             }
+
         }
         var ind = Math.max.apply(Math, userLength);
         var firstOne = 0;
@@ -70,6 +81,7 @@ fs.readFile('./restaurants.json', 'utf-8', function(err, data) {
                     }
                 }
             }
+
         }
 
         if (ind > -1) {
@@ -81,26 +93,24 @@ fs.readFile('./restaurants.json', 'utf-8', function(err, data) {
         res.send(contacts);
     });
 });
+/**
+   read the json file and store the users data into an array 
+*/
 fs.readFile('./users.json', 'utf-8', function(err, data) {
     if (err) throw err
+
     var data = JSON.parse(data);
     users = data.users;
+
 });
-getContactById = function getContactById(id) {
-    id = parseInt(id);
-    if (id !== -1) {
-        for (i = 0; i < contacts.length; i++) {
-            if (contacts[i].id === id) {
-                return contacts[i];
-            }
-        }
-    }
-    return null;
-};
+
 //This routes all document requests to the public folder
 app.use('/', express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+/**
+   this method will validate the user details and send response back.
+*/
 app.post('/api/login', function(req, res) {
     var name = req.body.name;
     for (var i = 0; i < users.length; i++) {
@@ -114,11 +124,11 @@ app.post('/api/login', function(req, res) {
     });
 
 });
-
+/**
+   this method will trigger when user caste their restaurant 
+*/
 app.put('/api/restaurants', function(req, res) {
     var id = parseInt(req.body.hotelData.id);
-    //contacts[id].isDisable = true;
-
     for (var i = 0; i < contacts.length; i++) {
         var getUserDate = new Date(contacts[i].selectedDate);
         getUserDate.setHours(10, 0, 0, 0);
@@ -138,7 +148,9 @@ app.put('/api/restaurants', function(req, res) {
     });
     res.send(contacts);
 });
-
+/**
+   this method will trigger when process facilitator change the permission of a visited restaurants 
+*/
 app.put('/api/restaurants/showDisable', function(req, res) {
     for (var i = 0; i < contacts.length; i++) {
         contacts[i].disableVisited = req.body.showPreviousSelected;
@@ -149,4 +161,4 @@ app.put('/api/restaurants/showDisable', function(req, res) {
     res.send(contacts);
 });
 app.listen(3000);
-console.log('Server running on 3000...');
+console.log('Server running now..');

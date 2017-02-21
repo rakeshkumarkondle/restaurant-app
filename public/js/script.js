@@ -1,4 +1,8 @@
 angular.module('restaurantApp', ['ngRoute'])
+/**
+ * @ngdoc config
+ * @description # it will configure the routing for the application.
+ */
     .config(['$routeProvider', function($routeProvider) {
 
         $routeProvider
@@ -13,8 +17,16 @@ angular.module('restaurantApp', ['ngRoute'])
             .otherwise({
                 redirectTo: '/login'
             });
-    }]).controller('HomeCtrl', function($scope, $rootScope, $http, $location, userDetails ) {
-        
+    }])
+/**
+ * @ngdoc controller
+ * @description # controller for the user's home page of the application
+ */
+    .controller('HomeCtrl', function($scope, $rootScope, $http, $location, userDetails ) {
+        /**
+         * @method logout
+         * descriprion # it will logged out the user from the current session
+         */
         $scope.logout = function(e) {
             e.preventDefault();
             localStorage.removeItem('userDetails');
@@ -27,6 +39,10 @@ angular.module('restaurantApp', ['ngRoute'])
             console.log($scope.loginDetails);
             localStorage.setItem('userDetails', JSON.stringify($scope.loginDetails));
         }
+        /**
+         * @method checkFlag
+         * descriprion # this will do all the manipulations and returns final data.
+         */
         $scope.checkFlag = function(res, reset) {
             var today = new Date();
             today.setHours(10, 0, 0, 0);
@@ -51,7 +67,7 @@ angular.module('restaurantApp', ['ngRoute'])
                 }
                 var checkCondition;
                 var dateCheck = new Date();
-                if (dateCheck.getHours() >= 23) {
+                if (dateCheck.getHours() >= 12) {
                     val.todaySelected = true;
                     $scope.disableSelect = true;
                 } else {
@@ -77,10 +93,17 @@ angular.module('restaurantApp', ['ngRoute'])
             });
             $rootScope.userDetails = res;
         }
+        /**
+         * @method reload
+         * descriprion # this will reload the current page.
+         */
         $scope.reload = function() {
             location.reload();
         }
-
+        /**
+         * @method toggleDisable
+         * descriprion # this will enable/disable the users to select visited restaurants.
+         */
         $scope.toggleDisable = function() {
             $http.put('/api/restaurants/showDisable', {
                 showPreviousSelected: $scope.showPreviousSelected
@@ -88,9 +111,13 @@ angular.module('restaurantApp', ['ngRoute'])
 
             });
         }
+        /**
+         * @method selectHotel
+         * descriprion # selects the restaurant for that day.
+         */
         $scope.selectHotel = function(userData) {
             var today = new Date();
-            if (today.getHours() >= 23) {
+            if (today.getHours() >= 12) {
                 $scope.showModal = true;
             } else {
                 today.setHours(10, 0, 0, 0)
@@ -99,6 +126,7 @@ angular.module('restaurantApp', ['ngRoute'])
                     user: $scope.loginDetails.data,
                     today: today
                 }).success(function(res) {
+                    console.log('res',res);
                     $scope.checkFlag(res, false);
                 });
             }
@@ -111,7 +139,7 @@ angular.module('restaurantApp', ['ngRoute'])
             }); 
         } else {
             var todayDate = new Date();
-            if (todayDate.getHours() >= 23) {
+            if (todayDate.getHours() >=  12) {
                 $scope.votingTimeDone = true;
                  $http.get('/api/resetRestaurants').then(function(res) {
                     $scope.checkFlag(res.data, true);
@@ -128,11 +156,21 @@ angular.module('restaurantApp', ['ngRoute'])
                 }
             }
         }
-    }).controller('loginCtrl', function($scope, $rootScope, $http, $location, userDetails) {
+    })
+/**
+ * @ngdoc controller
+ * @description # controller for the user's login page of the application
+ */
+    .controller('loginCtrl', function($scope, $rootScope, $http, $location, userDetails) {
        
         if (localStorage.getItem('userDetails') !== undefined && localStorage.getItem('userDetails') !== null) {
             $location.path('/home');
         }
+
+        /**
+         * @method signIn
+         * @description # this method enables the users to redirect to homepage
+         */
         $scope.signIn = function() {
             if ($scope.user != undefined) {
                 $http.post('/api/login', $scope.user).then(function(res) {
@@ -146,7 +184,12 @@ angular.module('restaurantApp', ['ngRoute'])
                 });
             }
         }
-    }).service('userDetails', function() {
+    })
+/**
+ * @ngdoc Service
+ * @description # this servive will save the login details of the user and available to the controllers.
+ */
+    .service('userDetails', function() {
         this.data = {};
         this.setLoginData = function(data) {
             this.data = data;
